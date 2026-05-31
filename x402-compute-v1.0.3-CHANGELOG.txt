@@ -2,7 +2,7 @@
 - Added one-time password fallback support docs and script (`get_one_time_password.py`).
 - Added AWAL support for `provision.py` and `extend_instance.py`.
 - AWAL mode now requires `COMPUTE_API_KEY` for compute management auth.
-- Added `awal_bridge.py` helper for AWAL CLI integration.
+- Added `awal_bridge.py` helper for AWAL CLI integration. 
 - Improved `provision.py` handling for `201 Created` success responses.
 - Improved AWAL error messages when `COMPUTE_API_KEY` is missing.
 - Updated plan-list script to support current API pricing fields.
