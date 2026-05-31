@@ -1,0 +1,14 @@
+- Bumped x402-compute skill version to 1.0.3.
+- Added one-time password fallback support docs and script (`get_one_time_password.py`).
+- Added AWAL support for `provision.py` and `extend_instance.py`.
+- AWAL mode now requires `COMPUTE_API_KEY` for compute management auth.
+- Added `awal_bridge.py` helper for AWAL CLI integration.
+- Improved `provision.py` handling for `201 Created` success responses.
+- Improved AWAL error messages when `COMPUTE_API_KEY` is missing.
+- Updated plan-list script to support current API pricing fields.
+- Updated list/details scripts to show plan and region correctly from API response.
+- Added SSH-key-first guidance with explicit key generation example (`ssh-keygen ... ~/.ssh/x402_compute`).
+- Synced skill updates to OMEGA docs skill folder.
+- Updated old worker hosted skill manifest/installer to include new script and guidance.
+- Added compute UI "Password" action in Your Fleet cards with one-time credential modal.
+- Created external changelog file outside skill folder (as requested).

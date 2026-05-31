@@ -1,134 +1,55 @@
 # x402 Omega Layer Documentation
 
 > [!CAUTION]
-> **The only official $OMG token is on Solana.**
+> The only official **$OMEGA** token is on Solana.
 >
-> **CA:** Soon
+> **CA:** `OMEGA_CA_TBA` &nbsp;*(token not launched yet — paste the real contract address here at launch)*
 >
-> 
+> [View on Dexscreener](https://dexscreener.com)
 >
-> 
+> All other tokens claiming to be **$OMEGA** are scams. Please stay safe out there.
 
 <p align="center">
-  <img src="./assets/SGL_logo.webp" alt="x402 Omega Layer" width="300" />
+  <img src="./assets/omega_logo.png" width="240" alt="Omega Layer" />
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge" alt="Version 1.0.0" />
-  <a href="https://clawhub.ai/ivaavimusic/x402-layer"><img src="https://img.shields.io/badge/ClawHub-x402--layer-blue?style=for-the-badge" alt="ClawHub Skill" /></a>
-  <img src="https://img.shields.io/badge/Network-Base-0052FF?style=for-the-badge&logo=base&logoColor=white" alt="Network: Base" />
-  <img src="https://img.shields.io/badge/Network-Solana-9945FF?style=for-the-badge&logo=solana&logoColor=white" alt="Network: Solana" />
-  <img src="https://img.shields.io/badge/Network-Ethereum-3C3C3D?style=for-the-badge&logo=ethereum&logoColor=white" alt="Network: Ethereum" />
-  <img src="https://img.shields.io/badge/Network-Polygon-7B3FE4?style=for-the-badge&logo=polygon&logoColor=white" alt="Network: Polygon" />
-  <img src="https://img.shields.io/badge/Network-BSC-F3BA2F?style=for-the-badge&logo=binance&logoColor=white" alt="Network: BSC" />
-  <img src="https://img.shields.io/badge/Network-Monad-836EF9?style=for-the-badge" alt="Network: Monad" />
-  <img src="https://img.shields.io/badge/Currency-USDC-2775CA?style=for-the-badge" alt="Currency: USDC" />
+  <img src="https://img.shields.io/badge/VERSION-1.0.0-111111" />
+  <img src="https://img.shields.io/badge/CLAWHUB-x402--layer-0052FF" />
+  <img src="https://img.shields.io/badge/NETWORK-BASE-0052FF" />
+  <img src="https://img.shields.io/badge/NETWORK-SOLANA-9945FF" />
+  <img src="https://img.shields.io/badge/NETWORK-ETHEREUM-3C3C3D" />
+  <img src="https://img.shields.io/badge/NETWORK-POLYGON-8247E5" />
+  <img src="https://img.shields.io/badge/NETWORK-BSC-F0B90B" />
+  <img src="https://img.shields.io/badge/NETWORK-MONAD-836EF9" />
+  <img src="https://img.shields.io/badge/CURRENCY-USDC-2775CA" />
 </p>
 
 <p align="center">
-  <strong>Internet's unified commerce layer for Homo-Agentic economy.</strong><br/>
-  Powered by <a href="https://ehlabs.xyz">EventHorizon Labs</a>
+  <b>Internet's unified commerce layer for the Homo-Agentic economy.</b><br/>
+  Powered by Tipler Labs
 </p>
 
 ---
 
-## 🚀 Quick Install (For AI Agents)
+## Links
 
-Install the x402-layer skill with a single command:
+- 🌐 Site — https://x402omega.xyz
+- 📚 Docs — https://docs.x402omega.xyz
+- 🛠 Studio — https://studio.x402omega.xyz
+- 𝕏 Twitter — https://x.com/x402_Omega
+- 💬 Telegram — https://t.me/omegalayerx402
+- 💻 GitHub — https://github.com/gitsafeteam/402Layer
 
-### Option 1: ClawHub (Recommended)
+## Documentation
 
-[![ClawHub](https://img.shields.io/badge/ClawHub-x402--layer-blue?style=for-the-badge)](https://clawhub.ai/ivaavimusic/x402-layer)
+- **User Guide** — getting started, dashboard, wallet connection, creating endpoints, managing credits, components, marketplace
+- **Omega Agent** — the AI agent that creates, runs and scales endpoints
+- **Agentic Access** — request → 402 → pay flow, pay-per-request, credit-based, MCP server, code examples
+- **Omega Payments** — webhooks, SDK & receipts
+- **Agentic Fundraisers** — campaigns, token launch, fee-distribution
+- **Enterprise** — revenue splits, API reference
 
-```bash
-clawhub install ivaavimusic/x402-layer
-```
+## License
 
-### Option 2: Self-hosted
-
-```bash
-curl -fsSL https://api.x402layer.cc/skill/x402-layer/install | bash
-```
-
-Or specify a custom directory:
-
-```bash
-curl -fsSL https://api.x402layer.cc/skill/x402-layer/install | bash -s ./my-skills/x402-layer
-```
-
-### Skill API Endpoints
-
-| Endpoint | Description |
-|----------|-------------|
-| [`/skill/x402-layer`](https://api.x402layer.cc/skill/x402-layer) | JSON manifest with file list |
-| [`/skill/x402-layer/install`](https://api.x402layer.cc/skill/x402-layer/install) | Shell install script |
-| [`/skill/x402-layer/SKILL.md`](https://api.x402layer.cc/skill/x402-layer/SKILL.md) | Main skill instructions |
-| [`/skill/x402-layer/requirements.txt`](https://api.x402layer.cc/skill/x402-layer/requirements.txt) | Python dependencies |
-| `/skill/x402-layer/scripts/{name}.py` | Individual Python scripts |
-
----
-
-## Overview
-
-Welcome to the official documentation for **x402 Omega Layer (SGL)**. This repository contains guides, API references, and architectural details for integrating with the x402 ecosystem.
-
-**x402 Studio** is the primary tool for developers to create, manage, and monitor their endpoints. Use the Studio to generate API keys, configure payments, and view analytics.
-
-[**Launch x402 Studio**](https://studio.x402layer.cc)
-
-## Documentation Structure
-
-Our documentation is organized into the following sections:
-
-### 📘 [User Guide](./user-guide)
-For developers and creators getting started with x402.
-- **Getting Started**: Initial setup and concepts.
-- **Creating Endpoints**: How to deploy your first monetized endpoint.
-- **Wallet Connection**: Managing identities and payments.
-
-### 🤖 [Agentic Access](./agentic-access)
-Technical details for AI agents and programmatic access.
-- **Introduction**: How agents interact with the protocol.
-- **Pay-Per-Request**: Direct 402 payment flow with EIP-712.
-- **Credit-Based Access**: High-speed credit consumption.
-- **Marketplace API**: Service discovery protocol.
-- **Agent Management**: Programmatic endpoint control.
-- **OpenClaw Skill**: Production-ready skill for OpenClaw agents.
-- **Omega Skill**: Portable full-platform skill for skills.sh-compatible agents.
-- **x402 Compute Skill**: Provision and manage VPS/GPU compute with x402 payments.
-
-### ⚡ [OpenClaw x402-Layer Skill](./agentic-access/openclaw-skill.mdx)
-Production-ready skill for [OpenClaw](https://x.com/openclaw) agents covering payments, endpoint ops, webhooks, and agent registry flows:
-
-| Script | Purpose |
-|--------|---------|
-| `pay_base.py` | Pay for endpoints on Base (recommended default) |
-| `pay_solana.py` | Pay for endpoints on Solana with the sponsored PayAI flow |
-| `consume_credits.py` | Use pre-purchased credits (fastest) |
-| `consume_product.py` | Purchase digital products (files) |
-| `check_credits.py` | Check your credit balance |
-| `recharge_credits.py` | Buy credit packs (Consumer) |
-| `topup_endpoint.py` | Add credits to YOUR endpoint (Provider) |
-| `create_endpoint.py` | Deploy new monetized endpoint ($1) |
-| `manage_endpoint.py` | View/update your endpoints |
-| `discover_marketplace.py` | Browse available services |
-| `list_on_marketplace.py` | Publish endpoint publicly |
-
-## Core Concepts
-
-- **Endpoints**: Monetizable APIs or assets protected by x402.
-- **Agents**: AI entities capable of rigorous commerce.
-- **Payment Facilitator**: The transparent middleware handling crypto transitions.
-
-## Contributing
-
-We welcome contributions! Please open an issue or submit a pull request for any improvements.
-
----
-
-<p align="center">
-  <img src="./assets/SGL_logo.webp" alt="x402 Icon" width="40" />
-</p>
-<p align="center">
-  © 2025 EventHorizon Labs. All rights reserved.
-</p>
+Apache-2.0

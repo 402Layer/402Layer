@@ -1,0 +1,215 @@
+---
+title: "Omega Agent on the Dashboard"
+description: "Full list of what Omega Agent AI can do from the dashboard chat interface"
+---
+
+# Omega Agent on the Dashboard
+
+Omega Agent AI lives at `/dashboard/omega-agent-ai` and has **56 tools** covering the entire x402Studio dashboard. It can read your data, create resources, update settings, and delete items — all from natural language chat.
+
+<Info>
+  Omega Agent AI is available on **Pro** and **Business** plans. Free plan users see an upgrade prompt.
+</Info>
+
+## Endpoints
+
+Omega Agent has full control over your API endpoints.
+
+| Action | What It Does |
+|--------|-------------|
+| **List endpoints** | Shows all your endpoints with name, slug, price, chain, status |
+| **Get endpoint details** | Full details including pricing config, wallet, audience mode, AgentKit benefits, payment count |
+| **Create endpoint** | Sets up a new monetized API with origin URL, pricing, wallet, chain, and auto-generates an API key |
+| **Update endpoint** | Change name, slug, price, mode, description, audience, AgentKit benefits |
+| **Delete endpoint** | Permanently removes an endpoint (with confirmation) |
+| **Toggle active** | Enable or disable an endpoint |
+| **Toggle marketplace listing** | Show or hide from the public marketplace |
+| **Rotate API key** | Generate a new API key, immediately invalidating the old one |
+| **View usage logs** | See recent API requests with status codes, latency, timestamps |
+| **View earnings** | Per-endpoint revenue breakdown sorted by highest earners |
+| **List agentic endpoints** | View endpoints created by AI agents separately |
+| **Get endpoint schema** | Retrieve the API schema (routes, parameters, body fields) for an endpoint |
+| **Set endpoint schema** | Update or remove the API schema on an endpoint (pass `null` to clear) |
+| **Detect endpoint schema** | Probe an origin URL for OpenAPI/Swagger specs and preview discovered routes (does not auto-save) |
+
+### Endpoint Creation Details
+
+When creating an endpoint, Omega Agent handles:
+- **Slug uniqueness** validation
+- **Plan limit** enforcement (Free: 1, Pro: 10, Business: unlimited)
+- **API key generation** — secure, encrypted at rest
+- **Multi-chain setup** — separate wallets for Base and Solana when chain is "both"
+- **AgentKit benefits** — free access, free trials, or discounts for ERC-8004 agents
+
+<Warning>
+  API keys are shown **once** at creation. Omega Agent will remind you to save them immediately.
+</Warning>
+
+## Products
+
+Full CRUD for digital products.
+
+| Action | What It Does |
+|--------|-------------|
+| **List products** | All products with name, slug, price, delivery type, status |
+| **Get product details** | Full details including delivery config, branding, sales count |
+| **Create product** | New digital product with auto-generated slug, price, wallet, chain |
+| **Update product** | Change name, price, description, audience mode, listing status |
+| **Delete product** | Permanently removes a product (with confirmation) |
+| **Toggle marketplace listing** | Show or hide from the public marketplace |
+
+## Webhooks
+
+Full webhook lifecycle management (Pro/Business only).
+
+| Action | What It Does |
+|--------|-------------|
+| **List webhooks** | All webhooks with URLs, events, active status, last delivery |
+| **Create webhook** | New HTTPS webhook with event subscriptions and signing secret |
+| **Update webhook** | Change URL, events, target scope, active status |
+| **Delete webhook** | Remove a webhook configuration |
+| **Rotate signing secret** | Generate a new `whsec_` signing secret |
+| **View deliveries** | Recent delivery attempts with status codes, response times, errors |
+
+<Warning>
+  Webhook signing secrets are shown **once**. Use them for HMAC-SHA256 verification of incoming payloads.
+</Warning>
+
+## Invoices
+
+Create and manage payment invoices.
+
+| Action | What It Does |
+|--------|-------------|
+| **List invoices** | All invoices with client info, amounts, status, due dates |
+| **Create invoice** | New invoice with client name, email, amount, payment options, optional expiry (1-60 days) |
+| **Update invoice** | Change client details, amount, description, status |
+| **Delete invoice** | Remove an invoice |
+
+## Payment Links
+
+Simple shareable payment URLs.
+
+| Action | What It Does |
+|--------|-------------|
+| **List payment links** | All payment links with titles, amounts, status |
+| **Create payment link** | New one-time payment link with title and amount |
+
+## Personal Access Tokens (PATs)
+
+Manage MCP authentication tokens.
+
+| Action | What It Does |
+|--------|-------------|
+| **List PATs** | All tokens with name, scopes, status (active/expired/revoked), expiry |
+| **Create PAT** | New token with name, scopes (`mcp:read`, `mcp:endpoints:write`, `mcp:campaigns:write`, `mcp:products:write`, `mcp:*`), and optional expiry (up to 10 years) |
+| **Revoke PAT** | Immediately invalidate a token |
+
+<Warning>
+  PAT values (format `omega_pat_{48hex}`) are shown **once** at creation. All create/revoke actions are audit-logged.
+</Warning>
+
+## Analytics & Activity
+
+Comprehensive data across your entire account.
+
+| Action | What It Does |
+|--------|-------------|
+| **Analytics summary** | Total revenue (endpoints + products), request counts, avg response time, success rate |
+| **Endpoint earnings** | Per-endpoint revenue breakdown with payment counts, sorted by highest |
+| **Endpoint usage logs** | Recent API requests with status codes, latency, timestamps (via gateway) |
+| **Activity log** | Paginated feed of payments, product sales, top-ups across all resources |
+| **Credit balance** | Check credits for a specific endpoint + wallet combination |
+
+## Other Capabilities
+
+| Action | What It Does |
+|--------|-------------|
+| **View plan & limits** | Current plan, usage counts, limits, billing info |
+| **List wallets** | Connected wallet addresses with network and verification status |
+| **List agents** | Registered ERC-8004 agents with reputation scores, endpoint bindings |
+| **Recent payments** | Payment history with payer wallet, amount, status, tx hash |
+| **Search marketplace** | Search endpoints, products, and agents by keyword |
+| **List components** | Payment components (Buy Me Coffee, Subscription, etc.) |
+| **Support threads** | List support threads where you're buyer or seller |
+| **Verification status** | World ID human verification status |
+| **Platform guide** | On-demand deep-dive docs on any platform topic |
+
+## Fundraiser Campaigns
+
+Full lifecycle management for Solana-based crowdfunding campaigns.
+
+| Action | What It Does |
+|--------|-------------|
+| **List campaigns** | Shows all your campaigns with title, target, raised amount, status, contributor count |
+| **Get campaign details** | Full details including top contributions, funding progress, payment endpoint URL |
+| **Create campaign** | New fundraiser with title, target amount, Solana wallet, optional ticker/category/deadline. Auto-provisions a payment endpoint. |
+| **Update campaign** | Edit title, description, X handle, images, or links (active campaigns only) |
+
+### Campaign Creation Details
+
+When creating a campaign, Omega Agent handles:
+- **Slug generation** from the title with random suffix
+- **Payment endpoint provisioning** — creates a `fund-{slug}` endpoint pointing to the platform escrow
+- **Solana wallet validation** — creator's payout wallet must be a valid Solana address
+- **Fee option configuration** — supporters (default), creator, or split
+
+<Warning>
+  Campaigns are Solana-only. Minimum target is $1,000 USDC. Financial fields (target, wallet, fee option) cannot be changed after creation.
+</Warning>
+
+## Ratings & Reviews
+
+Rate and review endpoints and products on the marketplace.
+
+| Action | What It Does |
+|--------|-------------|
+| **Submit rating** | Rate an endpoint or product (1-5 stars) with optional review text. Updates existing rating if you already rated. |
+| **Delete rating** | Remove your own rating |
+
+## Favorites
+
+Bookmark endpoints and products for quick access.
+
+| Action | What It Does |
+|--------|-------------|
+| **List favorites** | View all your favorited endpoints and products with details |
+| **Add favorite** | Bookmark an endpoint or product (max 50) |
+| **Remove favorite** | Remove from favorites |
+
+## Coupons
+
+Validate and apply promotional coupon codes.
+
+| Action | What It Does |
+|--------|-------------|
+| **Validate coupon** | Check if a coupon code is valid for a specific plan and billing cycle |
+| **Apply coupon** | Apply a 100% off coupon to upgrade your plan for free |
+
+<Note>
+  Coupons with partial discounts (e.g., 20% off) require completing payment at `/dashboard/pricing`. Omega Agent can only auto-apply coupons that give a completely free upgrade.
+</Note>
+
+## Platform Knowledge
+
+Omega Agent understands the entire x402Studio platform. Ask it about any topic — endpoints, credits, webhooks, agents, marketplace, plans, security best practices, and more — and it will provide detailed, accurate guidance.
+
+## Safety
+
+- **Confirmation required** — Every write action (create, update, delete, rotate, toggle, revoke) requires your explicit confirmation before execution
+- **User isolation** — Omega Agent can only access your own data. It cannot see other users' resources.
+- **Audit logging** — Sensitive actions like API key rotations and PAT management are fully audit-logged
+- **Secrets never touch the AI** — API keys, webhook signing secrets, and PAT values are delivered directly from the platform to your screen as secure cards. They never pass through the language model, are never stored in chat history, and are displayed exactly once.
+- **Rate limited** — Chat requests are throttled per-user to prevent abuse
+- **No wallet access** — Omega Agent cannot sign transactions, connect wallets, or initiate on-chain operations
+
+## What Omega Agent Can't Do (Yet)
+
+These actions require wallet signing or complex multi-step flows that aren't suitable for chat:
+
+- Register or update ERC-8004 agents (requires on-chain transaction)
+- Create payment components (creates multiple sub-endpoints)
+- Connect or disconnect wallets (requires wallet signature)
+- Upgrade or downgrade plans (requires payment flow)
+- Set up XMTP messaging profile
+- Upload files for product delivery

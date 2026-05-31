@@ -1,0 +1,47 @@
+---
+title: "Omega Agent"
+description: "Your AI-powered assistant for managing everything on x402Studio"
+---
+
+# Omega Agent
+
+Omega Agent AI is the built-in AI assistant for x402Studio. It can read, write, and manage nearly every resource on the platform — from creating endpoints and products to rotating API keys and checking analytics.
+
+Omega Agent operates in two surfaces:
+
+<CardGroup cols={2}>
+  <Card title="Omega Agent on the Dashboard" icon="message-bot" href="/ai-tools/omega-agent-dashboard">
+    56 tools for managing your x402Studio account via the chat interface at `/dashboard/omega-agent-ai`. Full CRUD on endpoints, products, webhooks, invoices, PATs, ratings, favorites, coupons, campaigns, and more.
+  </Card>
+  <Card title="Omega Agent on the Marketplace" icon="store" href="/ai-tools/omega-agent-marketplace">
+    35 MCP tools for marketplace discovery, endpoint management, payment flows, and agent registry — accessible from any MCP-compatible AI client.
+  </Card>
+</CardGroup>
+
+## How It Works
+
+### Dashboard (Chat Interface)
+1. Navigate to **Omega Agent AI** in the dashboard sidebar
+2. Ask anything — Omega Agent uses tools to look up your data and perform actions
+3. For write actions (create, update, delete), Omega Agent always confirms before executing
+4. Sensitive values like API keys and secrets are shown once — save them immediately
+
+### Marketplace (MCP Protocol)
+1. Connect the Omega MCP server to your AI client (Claude Desktop, Cursor, etc.)
+2. Authenticate with a Personal Access Token (PAT)
+3. Your AI client can browse, manage, and transact on the marketplace
+
+## Availability
+
+| Feature | Free | Pro | Business |
+|---------|------|-----|----------|
+| Dashboard Omega Agent AI | - | Yes | Yes |
+| MCP Marketplace (read) | Yes | Yes | Yes |
+| MCP Management (write) | PAT required | PAT required | PAT required |
+
+## Security
+
+- All tools enforce **user-level isolation** — Omega Agent can never access another user's data
+- Write actions always require **explicit confirmation** before executing
+- **Secrets never touch the AI model** — API keys, webhook signing secrets, and PATs are delivered directly from our infrastructure to your screen as secure UI cards. They are never sent to the language model and never appear in conversation history.
+- **Rate limited** — Chat requests are throttled per-user to prevent abuse

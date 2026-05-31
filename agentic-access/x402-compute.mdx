@@ -1,0 +1,265 @@
+---
+title: x402 Compute Skill - Omega Studio Docs
+description: Provision, manage, resize, and extend VPS/GPU compute with x402 or MPP payments, signed auth, API keys, and one-time password fallback
+---
+
+# x402 Compute Skill
+
+The `x402-compute` skill lets agents and developers provision and manage VPS/GPU instances on Vultr or DigitalOcean using x402 payments on Base, Solana, or MegaETH, MPP payments through Tempo-compatible clients such as `mppx`, or pre-loaded USD credits. Optional OWS-backed auth and API keys are available for management flows, including in-place resize.
+
+<Note>
+  Primary access method is SSH public key. If no SSH key was provided during provisioning, a one-time password fallback endpoint is available.
+</Note>
+
+<Note>
+  Current release: **v1.4.0**. x402 Base/Solana/MegaETH payments are live. Pre-loaded USD credits now available for payment-free provisioning and extending. MegaETH uses USDm (ERC-2612 permit) with an embedded facilitator — gasless for users. MPP Tempo USDC.e payments are also live for agent/CLI provisioning.
+</Note>
+
+<Note>
+  DigitalOcean is available as an additional compute provider when configured. DigitalOcean plans are prefixed with `do:` and require SSH key access because DigitalOcean does not expose one-time root passwords through its API.
+</Note>
+
+## Base URL
+
+`https://compute.x402omega.cc`
+
+## Auth Model
+
+Management endpoints require one of:
+
+1. Signature auth headers (`X-Auth-*`)
+2. API key (`X-API-Key`)
+
+Supported auth approaches today:
+
+- direct Base, Solana, or MegaETH signing keys
+- optional OpenWallet / OWS for auth + API-key creation + management
+
+Recommended agent flow:
+
+1. Create API key once via `POST /compute/api-keys` using direct signing keys or OWS-backed auth.
+2. Store key in `COMPUTE_API_KEY`.
+3. Use API key for routine list/details/resize/destroy/password fallback calls.
+
+## Resize model
+
+- `POST /compute/instances/:id/resize` is a management action, not a second payment flow.
+- The API preserves the instance's remaining prepaid dollar credit and recalculates `expires_at` for the target hourly rate.
+- Resize stays on the current provider and current region. The backend validates family/spec compatibility before it forwards the provider API call.
+- Vultr resizes are upgrade-only.
+- DigitalOcean can increase disk size, but disk-growing resizes require `confirm_disk_resize: true` because the disk change is irreversible.
+- Expect downtime during resize. Take a snapshot/backup first.
+
+## Endpoint Summary
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/compute/plans` | List VPS/GPU plans |
+| `GET` | `/compute/regions` | List deployment regions |
+| `GET` | `/compute/os` | List OS images |
+| `POST` | `/compute/provision` | Provision Vultr or DigitalOcean instance (x402 or MPP payment) |
+| `GET` | `/compute/instances` | List instances for authenticated wallet |
+| `GET` | `/compute/instances/:id` | Get instance details |
+| `POST` | `/compute/instances/:id/password` | One-time root password fallback |
+| `POST` | `/compute/instances/:id/extend` | Extend prepaid duration (x402 or MPP payment + auth) |
+| `POST` | `/compute/instances/:id/resize` | Resize an instance in place and recalculate remaining prepaid time |
+| `DELETE` | `/compute/instances/:id` | Destroy instance |
+| `GET` | `/compute/credits/balance` | Get credit balance for authenticated wallet |
+| `POST` | `/compute/credits/topup` | Top up credits via x402 payment |
+| `POST` | `/compute/api-keys` | Create API key (signature only) |
+| `GET` | `/compute/api-keys` | List API keys |
+| `DELETE` | `/compute/api-keys/:id` | Revoke API key |
+
+## Credits
+
+Pre-load USD credits to your wallet via a one-time x402 payment, then provision and extend instances without a live blockchain payment each time. Credits are ideal for API-key-driven automation where you want to avoid per-operation payment flows.
+
+- **Top up:** `POST /compute/credits/topup` with `{ "amount": 50, "network": "base" }`. Omit the `X-Payment` header to receive a 402 challenge, then pay and retry. Supports all networks: base, solana, megaeth.
+- **Check balance:** `GET /compute/credits/balance` with auth headers or API key.
+- **Use credits:** Pass `"use_credits": true` in the provision or extend request body. The server deducts from your credit balance instead of requiring x402/MPP payment.
+- **Auto-refund:** If the cloud provider rejects the instance after credits are deducted, the full amount is automatically refunded to your balance.
+
+<Note>
+  Credits are scoped per wallet. One credit pool covers all operations (provision + extend) across all providers and regions.
+</Note>
+
+## Install Skill
+
+```bash
+curl -fsSL https://api.x402omega.cc/skill/x402-compute/install | bash
+```
+
+## Scripts Included
+
+| Script | Purpose |
+|---|---|
+| `browse_plans.py` | Browse plans and pricing |
+| `browse_regions.py` | Browse regions |
+| `provision.py` | Provision a compute instance |
+| `create_api_key.py` | Create reusable API key |
+| `list_instances.py` | List instances |
+| `instance_details.py` | Get detailed status |
+| `get_one_time_password.py` | Fetch one-time root password fallback |
+| `extend_instance.py` | Extend instance duration |
+| `resize_instance.py` | Resize an instance in place |
+| `destroy_instance.py` | Destroy instance |
+| `ows_cli.py` | Run OpenWallet / OWS wallet, sign-message, and key commands |
+
+## Quick Workflow
+
+### 1) Provision with SSH Key (Recommended)
+
+```bash
+python scripts/provision.py vcg-a100-1c-2g-6gb lax --months 1 --ssh-key-file ~/.ssh/id_ed25519.pub
+```
+
+### 1b) Provision with MPP / mppx
+
+```bash
+npx mppx https://compute.x402omega.cc/compute/provision \
+  -X POST \
+  -J '{"plan":"vc2-1c-1gb","region":"ewr","os_id":2284,"label":"mpp-vps","prepaid_hours":24,"ssh_public_key":"ssh-ed25519 AAAA... agent"}'
+```
+
+If the MPP provision does not include wallet/API-key auth, the response includes a one-time `management_api_key`. Store it and use it for later instance management.
+
+DigitalOcean example:
+
+```bash
+npx mppx https://compute.x402omega.cc/compute/provision \
+  -X POST \
+  -J '{"plan":"do:s-1vcpu-1gb","provider":"digitalocean","region":"nyc3","os_id":123456789,"label":"do-vps","prepaid_hours":24,"ssh_public_key":"ssh-ed25519 AAAA... agent"}'
+```
+
+### 1c) Provision with Credits
+
+```bash
+# Step 1: Top up credits (one-time x402 payment)
+curl -X POST https://compute.x402omega.cc/compute/credits/topup \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: $COMPUTE_API_KEY" \
+  -d '{"amount": 100, "network": "base"}'
+# Returns 402 → pay → credits added
+
+# Step 2: Provision using credits (no payment needed)
+curl -X POST https://compute.x402omega.cc/compute/provision \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: $COMPUTE_API_KEY" \
+  -d '{
+    "plan": "vc2-1c-1gb",
+    "region": "ewr",
+    "os_id": 2284,
+    "label": "credit-vps",
+    "prepaid_hours": 720,
+    "ssh_public_key": "ssh-ed25519 AAAA... agent",
+    "use_credits": true
+  }'
+
+# Step 3: Check remaining balance
+curl https://compute.x402omega.cc/compute/credits/balance \
+  -H "X-API-Key: $COMPUTE_API_KEY"
+```
+
+### 2) Create API Key for Agents
+
+```bash
+python scripts/create_api_key.py --label "my-agent"
+export COMPUTE_API_KEY="x402c_..."
+```
+
+### 2b) Optional OpenWallet / OWS auth path
+
+```bash
+npm install -g @open-wallet-standard/core
+export OWS_WALLET="compute-wallet"
+export COMPUTE_AUTH_MODE="ows"
+python scripts/create_api_key.py --label "my-agent"
+```
+
+### 3) Manage Instances
+
+```bash
+python scripts/list_instances.py
+python scripts/instance_details.py <instance_id>
+python scripts/resize_instance.py <instance_id> vc2-2c-4gb
+python scripts/extend_instance.py <instance_id> --hours 720
+python scripts/destroy_instance.py <instance_id>
+```
+
+MPP-paid extension requires compute auth:
+
+```bash
+npx mppx https://compute.x402omega.cc/compute/instances/<instance_id>/extend \
+  -X POST \
+  -H "X-API-Key: $COMPUTE_API_KEY" \
+  -J '{"extend_hours":720}'
+```
+
+Resize uses the same management auth, but does not require x402 or MPP payment:
+
+```bash
+curl -X POST https://compute.x402omega.cc/compute/instances/<instance_id>/resize \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: $COMPUTE_API_KEY" \
+  -d '{"plan":"vc2-2c-4gb"}'
+```
+
+DigitalOcean disk growth example:
+
+```bash
+curl -X POST https://compute.x402omega.cc/compute/instances/<instance_id>/resize \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: $COMPUTE_API_KEY" \
+  -d '{"plan":"do:s-2vcpu-4gb","confirm_disk_resize":true}'
+```
+
+### 4) One-Time Password Fallback (Only if no SSH key)
+
+```bash
+python scripts/get_one_time_password.py <instance_id>
+```
+
+This works once per instance. Repeated calls return `409`.
+
+## OWS scope note
+
+- OWS is great for compute auth and management/API-key flows
+- Direct x402 provision and extend still use the current Base, Solana, or MegaETH payment-signing paths
+- MPP provision and extend use `mppx`, Tempo Wallet, or another MPP-capable client
+
+## Payment options
+
+| Option | Status | Notes |
+|---|---|---|
+| x402 Base USDC | Live | Existing UI/script flow |
+| x402 Solana USDC | Live | Existing script flow |
+| x402 MegaETH USDm | Live | ERC-2612 permit flow; embedded facilitator; gasless for users |
+| MPP Tempo USDC.e | Live | Tested with `npx mppx`; returns `Payment-Receipt` |
+| Credits | Live | Pre-load USD via x402 topup; provision/extend with `use_credits: true` |
+| MPP Stripe cards | Pending | Requires Stripe Machine Payments / Shared Payment Token access |
+
+## Compute providers
+
+| Provider | Status | Notes |
+|---|---|---|
+| Vultr | Live | One-time password fallback available; resize is upgrade-only |
+| DigitalOcean | Code-ready | Requires `DIGITALOCEAN_API_TOKEN`; SSH key required; disk growth is irreversible |
+
+## Security Notes
+
+- Wallet/agent can only access its own instances.
+- Replay protection uses signed nonce + timestamp.
+- MPP replay protection uses a shared Cloudflare Durable Object replay store.
+- Payment wallet must match authenticated wallet.
+- Resize preserves remaining prepaid value by changing expiry instead of charging a second payment.
+- Passwords are not returned in standard list/details/provision responses.
+- One-time password endpoint is owner-authenticated and single-use.
+- Credit deduction uses PostgreSQL row-level locking to prevent double-spend under concurrent requests.
+- Failed provider calls trigger automatic credit refund before the error response is returned.
+
+## References
+
+- Skill definition: `skills/x402-compute/SKILL.md`
+- Skill API reference: `skills/x402-compute/references/api-reference.md`
+- OWS reference: `skills/x402-compute/references/openwallet-ows.md`
+- Hosted installer: `https://api.x402omega.cc/skill/x402-compute/install`

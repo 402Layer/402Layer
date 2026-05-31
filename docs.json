@@ -1,0 +1,111 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Omega Layer",
+  "colors": {
+    "primary": "#0052FF",
+    "light": "#F5EEE2",
+    "dark": "#0A0A0A"
+  },
+  "logo": {
+    "light": "/assets/omega_logo.png",
+    "dark": "/assets/omega_logo.png"
+  },
+  "favicon": "/assets/favicon.png",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Home",
+        "pages": [
+          "index"
+        ]
+      },
+      {
+        "group": "User Guide",
+        "pages": [
+          "user-guide/getting-started",
+          "user-guide/dashboard",
+          "user-guide/wallet-connection",
+          "user-guide/creating-endpoints",
+          "user-guide/managing-credits",
+          "user-guide/products-payment-links",
+          "user-guide/components",
+          "user-guide/marketplace"
+        ]
+      },
+      {
+        "group": "Omega Agent",
+        "pages": [
+          "ai-tools/omega-agent-ai",
+          "ai-tools/omega-agent-dashboard",
+          "ai-tools/omega-agent-marketplace"
+        ]
+      },
+      {
+        "group": "Agentic Access",
+        "pages": [
+          "agentic-access/introduction",
+          "agentic-access/pay-per-request",
+          "agentic-access/credit-based",
+          "agentic-access/marketplace",
+          "agentic-access/agent-management",
+          "agentic-access/mcp-server",
+          "agentic-access/erc8004-registration",
+          "agentic-access/openclaw-skill",
+          "agentic-access/omega-skill",
+          "agentic-access/x402-compute"
+        ]
+      },
+      {
+        "group": "Omega Payments",
+        "pages": [
+          "user-guide/webhooks",
+          "developer/sdk-receipts"
+        ]
+      },
+      {
+        "group": "Agentic Fundraisers",
+        "pages": [
+          "fundraisers/introduction",
+          "fundraisers/token-launch",
+          "fundraisers/fee-distribution",
+          "fundraisers/omegabot",
+          "fundraisers/api-reference"
+        ]
+      },
+      {
+        "group": "Enterprise",
+        "pages": [
+          "enterprise/introduction",
+          "enterprise/getting-started",
+          "enterprise/api-reference",
+          "enterprise/revenue-splits"
+        ]
+      }
+    ]
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Marketplace",
+        "href": "https://x402omega.xyz/marketplace.html"
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/gitsafeteam/402Layer"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Open Studio",
+      "href": "https://studio.x402omega.xyz"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/x402_Omega",
+      "github": "https://github.com/gitsafeteam/402Layer",
+      "telegram": "https://t.me/omegalayerx402"
+    }
+  }
+}

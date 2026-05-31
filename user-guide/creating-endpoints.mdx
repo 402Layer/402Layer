@@ -1,0 +1,183 @@
+---
+title: Creating Endpoints - Omega Studio Docs
+description: How to create and configure paid API endpoints
+---
+
+# Creating Endpoints
+
+Endpoints are the core of Omega Studio. They turn your APIs into paid services that accept crypto payments automatically.
+
+## Endpoint Types
+
+<CardGroup cols={2}>
+  <Card title="Pay-Per-Request">
+    Charge a fixed price for each API call. Best for:
+    *   High-value API responses
+    *   Compute-intensive operations
+    *   Premium data access
+  </Card>
+  <Card title="Credit-Based">
+    Sell credit packs upfront. Best for:
+    *   High-volume APIs
+    *   Subscription-like access
+    *   Lighter per-call pricing
+  </Card>
+</CardGroup>
+
+## Pricing Limits
+
+<Note>
+All prices must be at least **0.01 USDC**. This applies to:
+- Pay-per-request pricing
+- Credit package prices
+- Agentic access pricing
+
+Prices below this minimum will be rejected by both the dashboard and API.
+</Note>
+
+## Creating a New Endpoint
+
+### Step 1: Navigate to Endpoints
+Go to **Dashboard → Endpoints** and click **New Endpoint**.
+
+### Step 2: Basic Information
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | A descriptive name for your endpoint |
+| **Description** | What this endpoint does (shown to users) |
+| **Origin URL** | Your actual API endpoint URL |
+
+### Step 3: Set Your Payout Address
+Enter the wallet address where you want to receive payments:
+
+```text
+0x742d35Cc6634C0532925a3b844Bc9e7595f2bD87
+```
+
+> ⚠️ Double-check this address. Payments are irreversible once sent.
+
+## Origin Protection (API Key Security)
+
+> **Important:** When you create an endpoint, Omega Studio generates an **Origin Protection Key** (API Key). This key is used by the x402 Gateway to authenticate requests to your origin server.
+>
+> **Without proper API key validation, your endpoint will not accept payments.** The gateway performs a health check before allowing payments, and if your origin returns a 401/403 error, the payment button will be disabled.
+
+### How It Works
+1.  When you create an endpoint, an API key is generated and shown once
+2.  Add this key to your server's environment variables (e.g., `X402_API_KEY`)
+3.  Your server must validate incoming requests using this key
+4.  The x402 Gateway sends the key in the `X-API-Key` header
+
+### Server-Side Validation Examples
+
+<CodeGroup>
+```javascript Express Middleware
+// Node.js / Express
+app.use((req, res, next) => {
+  const apiKey = req.headers['x-api-key'];
+  if (apiKey !== process.env.X402_API_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+});
+```
+
+```python Flask Middleware
+# Python / Flask
+from flask import request, jsonify
+
+@app.before_request
+def check_api_key():
+    api_key = request.headers.get('X-API-Key')
+    if api_key != os.environ.get('X402_API_KEY'):
+        return jsonify({'error': 'Unauthorized'}), 401
+```
+</CodeGroup>
+
+> **Public Endpoints:** If you don't want to require API key validation (e.g., your API is already public), you can disable the "Require API Key" toggle when creating the endpoint. However, this means anyone who discovers your origin URL can access it without payment.
+
+## Health Check (Service Availability)
+
+Before showing the payment button, Omega Studio runs a health check against your origin URL to verify your service is reachable. If the check fails, the payment page shows **"Service Unavailable"** and disables the pay button — protecting customers from paying for a down service.
+
+### How the Health Check Works
+
+1. We send a `HEAD` request to your origin URL (with your API key in headers if configured)
+2. If `HEAD` fails or returns 400+, we retry with a `GET` request
+3. Responses of **2xx**, **3xx**, or **402** mean your service is up
+4. Responses of **401/403** (auth error), **404** (not found), or **5xx** (server error) mark the service as unavailable
+5. No response within **10 seconds** is treated as a timeout
+
+<Warning>
+Make sure your origin handles `HEAD` requests. Most frameworks (Express, Flask, FastAPI) handle `HEAD` automatically for any route that supports `GET`. If yours doesn't, ensure the `GET` fallback returns 200.
+</Warning>
+
+### Troubleshooting "Service Unavailable"
+
+| Symptom | Cause | Fix |
+| :--- | :--- | :--- |
+| **401/403** | API key missing or incorrect | Re-check the key in your server's environment variables |
+| **404** | No route at the root path | Make sure `GET /` returns something (even a simple 200 OK) |
+| **Timeout** | Server took >10s to respond | Check if your server is running and reachable from the public internet |
+| **Network error** | Server unreachable | Ensure your server isn't behind a firewall blocking external requests |
+
+## Payment Page Inputs (API Schema)
+
+You can define custom input forms that appear on your endpoint's payment page. This lets customers provide data (like a prompt, email, or configuration) when they pay for your API.
+
+### Auto-Detect from OpenAPI
+
+If your origin server has an OpenAPI or Swagger spec, Omega Studio will automatically detect it when you enter your origin URL. Detected routes are pre-populated in the form builder — you can edit or remove them.
+
+### Manual Builder
+
+Use the form builder to define routes and input fields manually:
+
+1. Click **Add Route** to add an API route (GET, POST, PUT, etc.)
+2. Give it a **Service Name** — this is what customers see
+3. Add **Input Fields** — each field becomes a form input on the payment page
+4. Set labels, placeholders, and whether the field is required
+5. Use the **Preview** toggle to see exactly what customers will see
+
+### Where the Schema Appears
+
+| Surface | What's Shown |
+| :--- | :--- |
+| **Payment page** | Interactive form with your defined inputs |
+| **Marketplace listing** | API documentation with routes and parameters |
+| **402 challenge response** | Machine-readable `api_schema` field for agents |
+| **Agentic endpoints API** | Returned in GET/list responses |
+
+<Tip>
+The schema is optional. Endpoints without a schema work exactly the same — the proxy forwards everything as-is. The schema just helps consumers understand what to send.
+</Tip>
+
+## Testing Your Endpoint
+
+After creation, test that everything works:
+
+```bash
+# Get the 402 challenge
+curl https://api.x402omega.cc/api/public/endpoints/your-slug
+
+# Expected: 402 Payment Required with payment details
+```
+
+## Managing Endpoints
+From the Dashboard, you can:
+*   **Edit** – Update pricing, origin URL, or settings
+*   **Pause** – Temporarily disable the endpoint
+*   **Delete** – Permanently remove the endpoint
+*   **View Analytics** – See payment history and usage stats
+
+## 🤖 AI Integration Helper
+
+> **Don't know how to use your API key?** After creating an endpoint, you'll see a purple card with a "Copy AI Integration Prompt" button.
+>
+> Click it to copy a pre-written prompt, then paste it into any AI assistant:
+> *   **Cursor** – Paste in chat to generate integration code
+> *   **ChatGPT / Claude** – Get step-by-step integration help
+> *   **GitHub Copilot** – Use as context for code suggestions
+>
+> 💡 This is the easiest way to integrate x402 payments into your project with zero coding knowledge!
