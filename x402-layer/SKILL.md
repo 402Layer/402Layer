@@ -6,7 +6,7 @@ description: |
   manage credits/webhooks/marketplace listings, and handle wallet-first ERC-8004 registration/discovery/management/reputation on Base, Ethereum, Polygon, BSC, Monad, and Solana. Optional credentialed flows may use private keys, Solana signer keys, endpoint API keys, PATs, AWAL, or OWS depending on the exact runbook; read-only discovery requires no secrets.
   Only ask for or use privileged credentials after choosing a runbook that actually needs signing or owner-scoped writes.
   Use this skill when the user asks to "create x402 endpoint",
-  "deploy monetized API", "pay for API with USDC", "check x402 credits",
+  "deploy monetized API", "pay for API with USDC", "check x402 credits", 
   "consume API credits", "list endpoint on marketplace", "buy API credits",
   "topup endpoint", "browse x402 marketplace", "set up webhook",
   "receive payment notifications", "manage endpoint webhook",
