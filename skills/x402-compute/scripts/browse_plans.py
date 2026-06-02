@@ -4,7 +4,7 @@ x402Compute — Browse available compute plans.
 
 Lists GPU, VPS, and dedicated plans with pricing.
 Usage:
-  python browse_plans.py                  # all plans
+  python browse_plans.py                  # all plans 
   python browse_plans.py --type vcg       # GPU plans only
   python browse_plans.py --type vps       # VPS plans only
 """
