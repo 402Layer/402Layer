@@ -6,7 +6,7 @@ description: |
   "spin up a cloud server", "list compute plans", "browse GPU pricing",
   "extend compute instance", "resize compute instance", "destroy server instance", "check instance status",
   "list my instances", "top up compute credits", "check credit balance", or manage x402 Omega Compute / x402Compute
-  infrastructure. Handles GPU and VPS provisioning across Vultr and DigitalOcean
+  infrastructure. Handles GPU and VPS provisioning across Vultr and DigitalOcean 
   with USDC payment on Base or Solana, USDm payment on MegaETH via x402,
   optional MPP/Mppx payment flows, or pre-loaded USD credits for payment-free
   provisioning and extending. Includes optional OWS-backed auth and management flows.
