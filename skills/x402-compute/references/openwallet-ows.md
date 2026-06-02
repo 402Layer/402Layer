@@ -6,7 +6,7 @@ Use this reference when the user wants to use **Open Wallet Standard**, **OWS**,
 
 OWS is an optional wallet backend for:
 - compute auth message signing
-- creating a reusable `COMPUTE_API_KEY`
+- creating a reusable `COMPUTE_API_KEY` 
 - wallet-backed management flows without exporting raw keys into every shell
 
 That makes it useful for:
