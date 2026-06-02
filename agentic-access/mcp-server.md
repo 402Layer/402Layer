@@ -4,7 +4,7 @@ MCP for Omega Layer. Discover listings, manage endpoints and products, run payme
 
 > ✅ **v1.6.0** Phase 4 agent registry tooling shipped on March 22, 2026. PAT-first auth remains live, and MCP now exposes wallet-session agent registration and management in addition to payment flows.
 
-## What is MCP?
+## What is MCP? 
 
 The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) is a standardized protocol for connecting AI assistants to external systems. It provides a unified way for AI models to access tools, resources, and prompts from external services.
 
