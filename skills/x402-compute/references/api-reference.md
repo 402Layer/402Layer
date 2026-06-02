@@ -4,7 +4,7 @@ Base URL: `https://compute.x402omega.cc`
 
 Paid endpoints support both protocols:
 
-- **x402**: server returns JSON `accepts[]`; client retries with `X-Payment`.
+- **x402**: server returns JSON `accepts[]`; client retries with `X-Payment`. 
 - **MPP**: server returns `WWW-Authenticate: Payment`; client retries with `Authorization: Payment ...`; success includes `Payment-Receipt`.
 
 Compute plans can be backed by multiple providers:
