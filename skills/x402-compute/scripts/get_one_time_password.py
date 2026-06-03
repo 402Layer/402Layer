@@ -7,7 +7,7 @@ Usage:
 
 Notes:
 - This works only once per instance.
-- Prefer SSH key access whenever possible.
+- Prefer SSH key access whenever possible. 
 """
 
 import json
