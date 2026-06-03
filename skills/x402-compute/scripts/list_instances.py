@@ -12,7 +12,7 @@ import sys
 import requests
 
 from wallet_signing import create_compute_auth_headers
-
+ 
 BASE_URL = "https://compute.x402omega.cc"
 
 
