@@ -5,7 +5,7 @@ x402Compute — Get details for a specific instance.
 Usage:
   python instance_details.py <instance_id>
 """
-
+ 
 import json
 import sys
 
