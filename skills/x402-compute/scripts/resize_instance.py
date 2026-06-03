@@ -10,7 +10,7 @@ Examples:
   python resize_instance.py abc-123 do:s-2vcpu-4gb --confirm-disk-resize
 """
 
-import argparse
+import argparse 
 import json
 import sys
 
