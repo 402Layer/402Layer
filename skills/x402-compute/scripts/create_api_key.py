@@ -9,7 +9,7 @@ Usage:
 import argparse
 import json
 import sys
-
+ 
 import requests
 
 from wallet_signing import create_compute_auth_headers
