@@ -6,7 +6,7 @@ Usage:
   python browse_regions.py
 """
 
-import json
+import json 
 import sys
 
 import requests
