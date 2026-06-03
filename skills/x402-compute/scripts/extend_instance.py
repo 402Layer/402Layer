@@ -11,7 +11,7 @@ Usage:
   python extend_instance.py <instance_id> [--hours N] [--network base|solana]
 
 Example:
-  python extend_instance.py abc-123 --hours 720  # extend by 1 month
+  python extend_instance.py abc-123 --hours 720  # extend by 1 month 
 """
 
 import argparse
