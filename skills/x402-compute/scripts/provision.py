@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 x402Compute — Provision a new compute instance.
-
+ 
 Handles the full x402 payment flow:
 1. POST /compute/provision → get 402 challenge
 2. Sign USDC TransferWithAuthorization locally
