@@ -1,13 +1,13 @@
 # x402 Omega Layer Documentation
 
 > [!CAUTION]
-> The only official **$OMEGA** token is on Solana.
+> The only official **$OMG** token is on Solana.
 >
-> **CA:** `OMEGA_CA_TBA` &nbsp;*(token not launched yet — paste the real contract address here at launch)*
+> **CA:** `OMG_CA_TBA` &nbsp;*(token not launched yet — paste the real contract address here at launch)*
 >
 > [View on Dexscreener](https://dexscreener.com) 
 >
-> All other tokens claiming to be **$OMEGA** are scams. Please stay safe out there.
+> All other tokens claiming to be **$OMG** are scams. Please stay safe out there.
 
 <p align="center">
   <img src="./assets/omega_logo.png" width="240" alt="Omega Layer" />
