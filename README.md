@@ -39,7 +39,7 @@
 - 🛠 Studio — https://studio.x402omega.xyz
 - 𝕏 Twitter — https://x.com/x402_Omega
 - 💬 Telegram — https://t.me/omegalayerx402
-- 💻 GitHub — https://github.com/gitsafeteam/402Layer
+- 💻 GitHub — https://github.com/402Layer/402Layer
 
 ## Documentation
 
