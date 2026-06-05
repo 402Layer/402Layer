@@ -553,7 +553,7 @@ Choose the smallest path that fits the task:
 - Docs: https://docs.x402omega.cc/agentic-access/openclaw-skill
 - MCP docs: https://studio.x402omega.cc/docs/agentic-access/mcp-server
 - SDK docs: https://studio.x402omega.cc/docs/developer/sdk-receipts
-- GitHub docs repo: https://github.com/gitsafeteam/402Layer
+- GitHub docs repo: https://github.com/402Layer/402Layer
 - Omega Studio: https://studio.x402omega.cc
 
 ---
