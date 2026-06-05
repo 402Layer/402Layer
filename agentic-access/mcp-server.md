@@ -14,7 +14,7 @@ The Omega Layer MCP server exposes the broader platform through this protocol, c
 
 | Field | Value |
 |-------|-------|
-| Registry Package | `io.github.gitsafeteam/omega` |
+| Registry Package | `io.github.402Layer/omega` |
 | Registry Title | `Omega Layer MCP` |
 | Status | `active` |
 | Runtime Version | `1.6.0` |
@@ -22,7 +22,7 @@ The Omega Layer MCP server exposes the broader platform through this protocol, c
 | Published | `March 22, 2026` |
 | Website | `https://studio.x402omega.cc/docs/agentic-access/mcp-server` |
 
-The runtime server name remains `omega-mcp`, while the official registry package is `io.github.gitsafeteam/omega`.
+The runtime server name remains `omega-mcp`, while the official registry package is `io.github.402Layer/omega`.
 
 ## Endpoint
 
@@ -276,7 +276,7 @@ curl -X POST https://mcp.x402omega.cc/mcp \
 | Property | Value |
 |----------|-------|
 | Runtime Name | `omega-mcp` |
-| Registry Package | `io.github.gitsafeteam/omega` |
+| Registry Package | `io.github.402Layer/omega` |
 | Registry Title | `Omega Layer MCP` |
 | Registry Status | `active` |
 | Version | `1.6.0` runtime / `1.6.0` registry package |
