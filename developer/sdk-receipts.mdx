@@ -7,7 +7,7 @@ description: Verify payment receipts with the x402omega SDK for Node.js and Pyth
 
 Every successful payment through Omega Studio returns a signed **receipt token** (JWT). The x402omega SDK lets you verify these receipts server-side to gate premium content, confirm purchases, or audit payments.
 
-🔗 **GitHub**: [Omega-SDK](https://github.com/gitsafeteam/Omega-SDK)
+🔗 **GitHub**: [Omega-SDK](https://github.com/402Layer/Omega-SDK)
 🔑 **JWKS Endpoint**: [api.x402omega.cc/.well-known/jwks.json](https://api.x402omega.cc/.well-known/jwks.json)
 
 ## How It Works
@@ -35,7 +35,7 @@ const { verifyX402ReceiptToken, createX402ReceiptMiddleware } = require('x402ome
 ### Python
 
 ```bash
-pip install git+https://github.com/gitsafeteam/Omega-SDK.git#subdirectory=python
+pip install git+https://github.com/402Layer/Omega-SDK.git#subdirectory=python
 ```
 
 ```python
